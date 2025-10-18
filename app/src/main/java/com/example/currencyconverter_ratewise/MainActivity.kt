@@ -4,23 +4,92 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SecondaryTabRow
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.example.currencyconverter_ratewise.ui.screens.exchange.ExchangeScreen
+import com.example.currencyconverter_ratewise.ui.screens.converter.ConverterScreen
 import com.example.currencyconverter_ratewise.ui.theme.CurrencyConverterRateWiseTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        val tabItems = listOf(
+            TabItem(
+                title = "Converter"
+            ),
+            TabItem(
+                title = "Exchange Rates"
+            )
+        )
         setContent {
             CurrencyConverterRateWiseTheme {
-
+                Surface(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    var selectedTabIndex by remember {
+                        mutableIntStateOf(0)
+                    }
+                    val pagerState = rememberPagerState {
+                        tabItems.size
+                    }
+                    LaunchedEffect(selectedTabIndex) {
+                        pagerState.animateScrollToPage(selectedTabIndex)
+                    }
+                    LaunchedEffect(pagerState.currentPage){
+                        selectedTabIndex = pagerState.currentPage
+                    }
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        SecondaryTabRow(selectedTabIndex = selectedTabIndex) {
+                            tabItems.forEachIndexed { index, item ->
+                                Tab(
+                                    selected = index == selectedTabIndex,
+                                    onClick = {
+                                        selectedTabIndex = index
+                                    },
+                                    text = {
+                                        Text(text = item.title)
+                                    }
+                                )
+                            }
+                        }
+                        HorizontalPager(
+                            state = pagerState,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f)
+                        ) {
+                            when(it) {
+                                0 -> ConverterScreen()
+                                1 -> ExchangeScreen()
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 }
+
+data class TabItem(
+    val title: String
+)
