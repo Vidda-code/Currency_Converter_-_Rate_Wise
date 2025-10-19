@@ -1,5 +1,6 @@
 package com.example.currencyconverter_ratewise
 
+import android.R
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -7,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
@@ -30,17 +32,22 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         val tabItems = listOf(
             TabItem(
-                title = "Converter"
+                title = "Converter",
+                selectedColor = R.color.holo_green_dark,
+                unselectedColor = R.color.holo_green_light
             ),
             TabItem(
-                title = "Exchange Rates"
+                title = "Exchange Rates",
+                selectedColor = R.color.holo_blue_dark,
+                unselectedColor = R.color.holo_blue_light
             )
         )
         setContent {
             CurrencyConverterRateWiseTheme {
                 Surface(
                     modifier = Modifier
-                        .fillMaxSize(),
+                        .fillMaxSize()
+                        .statusBarsPadding(),
                     color = MaterialTheme.colorScheme.background
                 ) {
                     var selectedTabIndex by remember {
@@ -91,5 +98,7 @@ class MainActivity : ComponentActivity() {
 }
 
 data class TabItem(
-    val title: String
+    val title: String,
+    val selectedColor: Int,
+    val unselectedColor: Int
 )
