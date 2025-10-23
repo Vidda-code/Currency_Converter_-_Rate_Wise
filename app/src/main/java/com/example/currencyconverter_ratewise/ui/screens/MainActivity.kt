@@ -1,6 +1,7 @@
-package com.example.currencyconverter_ratewise
+package com.example.currencyconverter_ratewise.ui.screens
 
 import android.R
+import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -22,14 +23,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.currencyconverter_ratewise.ui.screens.exchange.ExchangeScreen
 import com.example.currencyconverter_ratewise.ui.screens.converter.ConverterScreen
 import com.example.currencyconverter_ratewise.ui.theme.CurrencyConverterRateWiseTheme
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Inject
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        actionBar?.hide()
+        installSplashScreen()
         val tabItems = listOf(
             TabItem(
                 title = "Converter",
