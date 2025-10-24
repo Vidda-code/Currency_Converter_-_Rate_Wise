@@ -1,5 +1,7 @@
 package com.example.currencyconverter_ratewise.di
 
+import android.content.Context
+import com.example.currencyconverter_ratewise.data.preferences.ThemePreferences
 import com.example.currencyconverter_ratewise.data.remote.ApiService
 import com.example.currencyconverter_ratewise.data.repository.CurrencyRepository
 import com.example.currencyconverter_ratewise.data.repository.CurrencyRepositoryImpl
@@ -8,6 +10,7 @@ import com.example.currencyconverter_ratewise.domain.usecase.GetExchangeRatesUse
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -37,5 +40,11 @@ object AppModule {
     @Singleton
     fun provideGetExchangeRatesUseCase(repository: CurrencyRepositoryImpl): GetExchangeRatesUseCase {
         return GetExchangeRatesUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideThemePreferences(@ApplicationContext context: Context): ThemePreferences {
+        return ThemePreferences(context)
     }
 }

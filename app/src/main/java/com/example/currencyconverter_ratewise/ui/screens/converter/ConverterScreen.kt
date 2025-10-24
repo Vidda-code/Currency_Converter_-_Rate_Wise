@@ -18,6 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.currencyconverter_ratewise.ui.screens.settings.SettingsViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -39,7 +40,7 @@ fun ConverterScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0xFFF5F5F5))
+                .background(color = MaterialTheme.colorScheme.background)
                 .padding(16.dp)
         ) {
             Spacer(modifier = Modifier.height(16.dp))
@@ -205,7 +206,7 @@ fun CurrencyCard(
             .height(100.dp)
             .clickable(onClick = onCardClick),
         shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Row(
@@ -418,7 +419,7 @@ fun CurrencyItem(
             .fillMaxWidth()
             .clickable(onClick = onClick),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Row(
@@ -443,7 +444,12 @@ fun CurrencyItem(
 }
 
 @Composable
-fun SettingsSheet(onDismiss: () -> Unit) {
+fun SettingsSheet(
+    onDismiss: () -> Unit,
+    settingsViewModel: SettingsViewModel = hiltViewModel()
+) {
+    val isDarkMode by settingsViewModel.isDarkMode.collectAsState()
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -460,7 +466,9 @@ fun SettingsSheet(onDismiss: () -> Unit) {
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.White)
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceVariant
+            )
         ) {
             Row(
                 modifier = Modifier
@@ -469,8 +477,15 @@ fun SettingsSheet(onDismiss: () -> Unit) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "Dark Mode", fontSize = 16.sp)
-                Switch(checked = false, onCheckedChange = { /* TODO */ })
+                Text(
+                    text = "Dark Mode",
+                    fontSize = 16.sp,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Switch(
+                    checked = isDarkMode,
+                    onCheckedChange = { settingsViewModel.toggleDarkMode(it) }
+                )
             }
         }
 
@@ -482,7 +497,9 @@ fun SettingsSheet(onDismiss: () -> Unit) {
                 .fillMaxWidth()
                 .clickable { /* TODO */ },
             shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.White)
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceVariant
+            )
         ) {
             Row(
                 modifier = Modifier
@@ -491,8 +508,16 @@ fun SettingsSheet(onDismiss: () -> Unit) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "Submit Feedback", fontSize = 16.sp)
-                Text(text = ">", fontSize = 20.sp, color = Color.Gray)
+                Text(
+                    text = "Submit Feedback",
+                    fontSize = 16.sp,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Text(
+                    text = ">",
+                    fontSize = 20.sp,
+                    color = Color.Gray
+                )
             }
         }
 
@@ -504,7 +529,9 @@ fun SettingsSheet(onDismiss: () -> Unit) {
                 .fillMaxWidth()
                 .clickable { /* TODO */ },
             shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.White)
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceVariant
+            )
         ) {
             Row(
                 modifier = Modifier
@@ -513,8 +540,16 @@ fun SettingsSheet(onDismiss: () -> Unit) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "About", fontSize = 16.sp)
-                Text(text = ">", fontSize = 20.sp, color = Color.Gray)
+                Text(
+                    text = "About",
+                    fontSize = 16.sp,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Text(
+                    text = ">",
+                    fontSize = 20.sp,
+                    color = Color.Gray
+                )
             }
         }
 

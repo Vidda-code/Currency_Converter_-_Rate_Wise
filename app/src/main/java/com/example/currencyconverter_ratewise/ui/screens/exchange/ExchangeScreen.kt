@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.currencyconverter_ratewise.data.model.Currency
+import com.example.currencyconverter_ratewise.ui.screens.settings.SettingsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -48,7 +49,7 @@ fun ExchangeScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0xFFF5F5F5))
+                .background(color = MaterialTheme.colorScheme.background)
                 .padding(16.dp)
         ) {
             Spacer(modifier = Modifier.height(16.dp))
@@ -297,7 +298,7 @@ fun BaseCurrencyCard(
             .height(80.dp)
             .clickable(onClick = onCardClick),
         shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Row(
@@ -346,7 +347,7 @@ fun ExchangeRateItem(
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
         Row(
@@ -474,7 +475,7 @@ fun AddCurrencyItem(
             .fillMaxWidth()
             .clickable(onClick = onClick),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Row(
@@ -585,7 +586,7 @@ fun BaseCurrencyItem(
             .fillMaxWidth()
             .clickable(onClick = onClick),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Row(
@@ -610,7 +611,12 @@ fun BaseCurrencyItem(
 }
 
 @Composable
-fun SettingsSheet(onDismiss: () -> Unit) {
+fun SettingsSheet(
+    onDismiss: () -> Unit,
+    settingsViewModel: SettingsViewModel = hiltViewModel()
+) {
+    val isDarkMode by settingsViewModel.isDarkMode.collectAsState()
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -623,10 +629,13 @@ fun SettingsSheet(onDismiss: () -> Unit) {
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
+        // Dark Mode Toggle
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.White)
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceVariant
+            )
         ) {
             Row(
                 modifier = Modifier
@@ -635,19 +644,29 @@ fun SettingsSheet(onDismiss: () -> Unit) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "Dark Mode", fontSize = 16.sp)
-                Switch(checked = false, onCheckedChange = { /* TODO */ })
+                Text(
+                    text = "Dark Mode",
+                    fontSize = 16.sp,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Switch(
+                    checked = isDarkMode,
+                    onCheckedChange = { settingsViewModel.toggleDarkMode(it) }
+                )
             }
         }
 
         Spacer(modifier = Modifier.height(8.dp))
 
+        // Submit Feedback
         Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable { /* TODO */ },
             shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.White)
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceVariant
+            )
         ) {
             Row(
                 modifier = Modifier
@@ -656,19 +675,30 @@ fun SettingsSheet(onDismiss: () -> Unit) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "Submit Feedback", fontSize = 16.sp)
-                Text(text = ">", fontSize = 20.sp, color = Color.Gray)
+                Text(
+                    text = "Submit Feedback",
+                    fontSize = 16.sp,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Text(
+                    text = ">",
+                    fontSize = 20.sp,
+                    color = Color.Gray
+                )
             }
         }
 
         Spacer(modifier = Modifier.height(8.dp))
 
+        // About
         Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable { /* TODO */ },
             shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.White)
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceVariant
+            )
         ) {
             Row(
                 modifier = Modifier
@@ -677,13 +707,22 @@ fun SettingsSheet(onDismiss: () -> Unit) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "About", fontSize = 16.sp)
-                Text(text = ">", fontSize = 20.sp, color = Color.Gray)
+                Text(
+                    text = "About",
+                    fontSize = 16.sp,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Text(
+                    text = ">",
+                    fontSize = 20.sp,
+                    color = Color.Gray
+                )
             }
         }
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        // App Version
         Text(
             text = "Rate Wise\nv0.0.1",
             fontSize = 14.sp,

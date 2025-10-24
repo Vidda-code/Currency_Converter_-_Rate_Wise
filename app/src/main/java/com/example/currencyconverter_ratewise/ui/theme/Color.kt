@@ -2,17 +2,24 @@ package com.example.currencyconverter_ratewise.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-//Dark Theme
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+// Light Theme Colors
+val LightPrimary = Color(0xFF2274A5)
+val LightOnPrimary = Color.White
+val LightBackground = Color(0xFFF0F4FA)
+val LightSurface = Color.White
+val LightOnSurface = Color(0xFF1E1E1E)
+val LightSecondary = Color(0xFF1976D2)
 
-//Light Theme
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+// Dark Theme Colors
+val DarkPrimary = Color(0xFF64B5F6)
+val DarkOnPrimary = Color(0xFF1E1E1E)
+val DarkBackground = Color(0xFF121212)
+val DarkSurface = Color(0xFF1E1E1E)
+val DarkOnSurface = Color(0xFFD9D9D9)
+val DarkSecondary = Color(0xFF90CAF9)
 
-val Black40 = Color(0xFF131B23)
-val White40 = Color(0xFFF0F4FA)
-val Blue40 = Color(0xFF2274A5)
-val Grey40 = Color(0xFFD9D9D9)
+// Additional colors
+val CardLightBackground = Color.White
+val CardDarkBackground = Color(0xFF2C2C2C)
+val DividerLight = Color(0xFFE0E0E0)
+val DividerDark = Color(0xFF424242)
