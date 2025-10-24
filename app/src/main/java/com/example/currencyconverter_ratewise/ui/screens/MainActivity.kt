@@ -1,7 +1,6 @@
 package com.example.currencyconverter_ratewise.ui.screens
 
 import android.R
-import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -29,9 +28,10 @@ import com.example.currencyconverter_ratewise.ui.screens.converter.ConverterScre
 import com.example.currencyconverter_ratewise.ui.theme.CurrencyConverterRateWiseTheme
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
-import javax.inject.Inject
+import android.app.Application
 
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

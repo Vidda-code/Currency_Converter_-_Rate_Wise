@@ -1,8 +1,6 @@
 package com.example.currencyconverter_ratewise.data.remote.dto
 
-import kotlinx.serialization.Serializable
 
-@Serializable
 data class ExchangeRateResponse(
     val base_code: String,
     val conversion_rate: Double,
