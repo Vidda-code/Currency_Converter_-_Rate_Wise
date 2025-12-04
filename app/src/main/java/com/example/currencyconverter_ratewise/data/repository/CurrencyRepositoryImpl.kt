@@ -29,9 +29,8 @@ class CurrencyRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getAvailableCurrencies(): List<Currency> {
-        // This returns a hardcoded list of popular currencies
-        // You can expand this or fetch from API if needed
         return listOf(
+            Currency("Nigerian Naira", "NGN"),
             Currency("US Dollar", "USD"),
             Currency("Euro", "EUR"),
             Currency("British Pound", "GBP"),
@@ -41,7 +40,6 @@ class CurrencyRepositoryImpl @Inject constructor(
             Currency("Swiss Franc", "CHF"),
             Currency("Chinese Yuan", "CNY"),
             Currency("Indian Rupee", "INR"),
-            Currency("Nigerian Naira", "NGN"),
             Currency("South African Rand", "ZAR"),
             Currency("Mexican Peso", "MXN"),
             Currency("Brazilian Real", "BRL"),

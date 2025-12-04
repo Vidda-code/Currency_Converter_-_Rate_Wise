@@ -3,6 +3,7 @@ package com.example.currencyconverter_ratewise.ui.theme
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -15,6 +16,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import androidx.privacysandbox.tools.core.model.Type
 
 private val LightColorScheme = lightColorScheme(
     primary = LightPrimary,
@@ -57,7 +59,15 @@ fun CurrencyConverterRateWiseTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.background.toArgb()
+
+            val statusBarColor = if (darkTheme) {
+                Color(0xFFBDBDBD).toArgb() // Darker grey for dark theme
+            } else {
+                Color(0xFFBDBDBD).toArgb() // Lighter grey for light theme
+            }
+
+            //WindowInsets.Type.statusBars()
+            window.statusBarColor = statusBarColor
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }
     }

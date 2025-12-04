@@ -18,6 +18,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.currencyconverter_ratewise.ui.screens.about.AboutSheet
+import com.example.currencyconverter_ratewise.ui.screens.feedback.FeedbackSheet
 import com.example.currencyconverter_ratewise.ui.screens.settings.SettingsViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -35,6 +37,8 @@ fun ConverterScreen(
     var showFromCurrencySheet by remember { mutableStateOf(false) }
     var showToCurrencySheet by remember { mutableStateOf(false) }
     var showSettings by remember { mutableStateOf(false) }
+    var showFeedback by remember { mutableStateOf(false) }
+    var showAbout by remember { mutableStateOf(false) }
 
     Box(modifier = modifier.fillMaxSize()) {
         Column(
@@ -175,7 +179,6 @@ fun ConverterScreen(
             )
         }
     }
-
     // Settings Bottom Sheet
     if (showSettings) {
         ModalBottomSheet(
@@ -186,6 +189,46 @@ fun ConverterScreen(
                 onDismiss = {
                     scope.launch { sheetState.hide() }.invokeOnCompletion {
                         showSettings = false
+                    }
+                },
+                onFeedbackClick = {
+                    showSettings = false
+                    showFeedback = true
+                },
+                onAboutClick = {
+                    showSettings = false
+                    showAbout = true
+                }
+            )
+        }
+    }
+
+// Feedback Bottom Sheet
+    if (showFeedback) {
+        ModalBottomSheet(
+            onDismissRequest = { showFeedback = false },
+            sheetState = sheetState
+        ) {
+            FeedbackSheet(
+                onDismiss = {
+                    scope.launch { sheetState.hide() }.invokeOnCompletion {
+                        showFeedback = false
+                    }
+                }
+            )
+        }
+    }
+
+// About Bottom Sheet
+    if (showAbout) {
+        ModalBottomSheet(
+            onDismissRequest = { showAbout = false },
+            sheetState = sheetState
+        ) {
+            AboutSheet(
+                onDismiss = {
+                    scope.launch { sheetState.hide() }.invokeOnCompletion {
+                        showAbout = false
                     }
                 }
             )
@@ -446,6 +489,8 @@ fun CurrencyItem(
 @Composable
 fun SettingsSheet(
     onDismiss: () -> Unit,
+    onFeedbackClick: () -> Unit,
+    onAboutClick: () -> Unit,
     settingsViewModel: SettingsViewModel = hiltViewModel()
 ) {
     val isDarkMode by settingsViewModel.isDarkMode.collectAsState()
@@ -453,12 +498,14 @@ fun SettingsSheet(
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.background)
             .padding(16.dp)
     ) {
         Text(
             text = "Settings",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
@@ -495,7 +542,7 @@ fun SettingsSheet(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { /* TODO */ },
+                .clickable { onFeedbackClick() },
             shape = RoundedCornerShape(16.dp),
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.surfaceVariant
@@ -527,7 +574,7 @@ fun SettingsSheet(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { /* TODO */ },
+                .clickable { onAboutClick() },
             shape = RoundedCornerShape(16.dp),
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.surfaceVariant

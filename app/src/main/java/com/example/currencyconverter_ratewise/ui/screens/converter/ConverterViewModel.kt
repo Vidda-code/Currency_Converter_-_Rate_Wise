@@ -38,7 +38,7 @@ class ConverterViewModel @Inject constructor(
                     it.copy(
                         availableCurrencies = currencies,
                         fromCurrency = currencies.firstOrNull { it.code == "USD" } ?: currencies.first(),
-                        toCurrency = currencies.firstOrNull { it.code == "EUR" } ?: currencies.last()
+                        toCurrency = currencies.firstOrNull { it.code == "NGN" } ?: currencies.last()
                     )
                 }
             } catch (e: Exception) {
